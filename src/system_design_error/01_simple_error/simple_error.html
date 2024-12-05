@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>単項目チェック_01</title>
+</head>
+<body>
+    <h1>単項目チェック_01</h1>
+    <div>
+        <label for="number">数値 :</label>
+        <input type="number" id="number" name="number" size="10" />
+    </div>
+    <div>
+        <button id="checkbutton">単項目チェック</button>
+    </div>
+    <div id="result">結果：</div>
+<script>
+　　// エラーメッセージ設計
+
+    // event 系
+window.onload = (event) => {
+    // dom要素取得
+    const button = document.getElementById('checkbutton');
+    const number = document.getElementById('number');
+    const result = document.getElementById('result');
+    
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+
+        result.innerHTML　= "結果：";
+        let isNumber =  numberSingleItemCheck(parseInt(number.value));
+        if(isNumber != true){
+            console.error(isNumber);
+            result.innerHTML += isNumber
+            return;
+        }
+        result.innerHTML += "問題無し。"
+    });
+};
+
+function numberSingleItemCheck(number){
+    try{
+        let numberMessage = "";
+        // if( number == ""){
+        //     throw new TypeError("空欄です。");
+        // }
+
+        // 整数以外の数字
+        console.log(typeof(number));
+        console.log(number);
+        if( !Number.isInteger(number)){
+            throw new TypeError("空欄、数値以外が入力されています。");
+        }
+        console.log(number);
+        if( number < 0 || number >= 100){
+            throw new RangeError("数値は0以上100未満です。");
+        }
+        return true;
+    }catch (e) {
+         return e.message;
+
+        } finally {
+    	 //必ず実行される処理
+    }
+}
+</script>
+</body>
+</html>
