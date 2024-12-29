@@ -1,0 +1,74 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>1_7 武器の強化判定</title>
+</head>
+<body>
+    <h1>1_7 武器の強化判定</h1>
+    <div id="message_area" style="color:red;"> </div>
+    <div>
+        <div>
+            <input type="radio" id="hinoki" name="weapon" value="0" />
+            <label for="hinoki">ひのきの棒</label>
+        </div>
+        <div>
+            <input type="radio" id="ninjin" name="weapon" value="1" />
+            <label for="ninjin">にんじんの短剣</label>
+        </div>
+        <div>
+            <input type="radio" id="kikori" name="weapon" value="2" />
+            <label for="kikori">きこりの大斧</label>
+        </div>
+        <div>
+            <input type="radio" id="kusanagi" name="weapon" value="3" />
+            <label for="kusanagi">草薙の槍</label>
+        </div>
+    </div>
+    <button id="run">強化</button>
+<script>
+    let currentEnchant = [0,0,0,0];
+    const maxEnchant = [0,0,0,1];
+    const  weapon_id =["hinoki","ninjin","kikori","kusanagi"];
+
+    // event 系
+window.onload = (event) => {
+
+    const messageArea = document.getElementById('message_area');
+    const button = document.getElementById('run');
+    // const textBox= document.get('weapon');
+    const result = document.getElementById('result');
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+        messageArea.innerHTML = "";
+        // 武器強化
+        if(currentEnchant[getRadioBoxValue()] == maxEnchant[getRadioBoxValue()]){
+            messageArea.innerHTML = "結果:強化限界です。";
+            return;
+        }
+
+        currentEnchant[getRadioBoxValue()] = 1;
+        messageArea.innerHTML = "結果:強化しました。";
+        const weapon_name= document.getElementById(weapon_id[getRadioBoxValue()]);
+        document.getElementsByTagName("label")[parseInt(getRadioBoxValue())].innerHTML +=  "  強化済み";
+    });
+}
+
+
+function getRadioBoxValue(){
+        // ラジオボタンの取得
+        let elements = document.getElementsByName('weapon');
+        let len = elements.length;
+        let checkValue = '';
+        for (let i = 0; i < len; i++){
+            if (elements.item(i).checked){
+                checkValue = elements.item(i).value;
+            }
+        }
+        console.log(checkValue);
+        return checkValue;
+}
+
+</script>
+</body>
+</html>
