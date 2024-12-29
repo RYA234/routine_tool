@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2_04 魔王との戦い</title>
+</head>
+<body>
+    <h1>2_04 魔王との戦い</h1>
+    <div>
+        <h2>仲間</h2>
+        <div>
+            <ul>
+                <li>
+                賢者
+                <input type="checkbox" id="sage" name="sage" />
+                <label for="sage">有</label>
+                </li>
+            </ul>
+        </div>
+        <h2>持ち物</h2>
+        <div>
+            <ul>
+                <li>
+                    まほうのつえ
+                    <input type="checkbox" id="staff" name="staff" />
+                    <label for="staff">有</label>
+                </li>
+                <li>
+                    くらやみのかぎ
+                    <input type="checkbox" id="key" name="key" />
+                    <label for="key">有</label>
+                </li>
+                <li>
+                    ひかりのかぎ
+                    <input type="checkbox" id="sword" name="sword" />
+                    <label for="sword">有</label>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <button id="run">魔王を倒せるか判定</button>
+    <div id="result" style="color:red;"> </div>
+<script>
+    let currentEnchant = [0,0,0,0];
+    const maxEnchant = [0,0,0,1];
+    const  weapon_id =["hinoki","ninjin","kikori","kusanagi"];
+
+    // event 系
+window.onload = (event) => {
+
+    const sageCheckBox = document.getElementById('sage');
+    const staffCheckBox = document.getElementById('staff');
+    const keyCheckBox = document.getElementById('key');
+    const swordCheckBox = document.getElementById('sword');
+    const button = document.getElementById('run');
+    const result = document.getElementById('result');
+    
+    const normalPrice = 490;
+    const couponPrice = 100;
+    const happyHourPrice = 290;
+
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+        if(!(sageCheckBox.checked || staffCheckBox.checked) ){
+            result.innerHTML = "結果:部屋を探し出せませんでした。";
+            return
+        }
+
+        if(!keyCheckBox.checked){
+            result.innerHTML = "結果: 部屋を探しだしました。しかし、鍵がないので部屋に入れません。";
+            return
+        }
+        if(!swordCheckBox.checked){
+            result.innerHTML = "結果: 部屋を探しだしました。そして、部屋に入れました。しかし、魔王を倒すには剣が必要です。";
+            return
+        }
+        result.innerHTML = "結果: 部屋を探しだしました。そして、部屋に入れました。魔王を倒しました。";
+    });
+}
+</script>
+</body>
+</html>
