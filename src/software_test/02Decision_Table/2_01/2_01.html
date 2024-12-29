@@ -1,0 +1,54 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2_1 一杯目のビールの価格</title>
+</head>
+<body>
+    <h1>2_1 一杯目のビールの価格</h1>
+    <div>
+        <div>
+            <input type="checkbox" id="happyHour" name="happyHour" />
+            <label for="happyHour">ハッピーアワー</label>
+        </div>
+        <div>
+            <input type="checkbox" id="coupon" name="coupon" />
+            <label for="coupon">クーポン</label>
+        </div>
+    </div>
+    <button id="run">計算</button>
+    <div id="result" style="color:red;"></div>
+<script>
+    let currentEnchant = [0,0,0,0];
+    const maxEnchant = [0,0,0,1];
+    const  weapon_id =["hinoki","ninjin","kikori","kusanagi"];
+
+    // event 系
+window.onload = (event) => {
+
+    const coupon = document.getElementById('coupon');
+    const happyHour = document.getElementById('happyHour');
+    const button = document.getElementById('run');
+    const result = document.getElementById('result');
+    
+    const normalPrice = 490;
+    const couponPrice = 100;
+    const happyHourPrice = 290;
+
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+        console.log(happyHour.checked);
+        if(coupon.checked){
+            result.innerHTML = "結果: " + (couponPrice ) + "円です。";
+            return
+        }
+        if(happyHour.checked){
+            result.innerHTML = "結果: " + (happyHourPrice) + "円です。";
+            return
+        }
+        result.innerHTML = "結果: " + (normalPrice) + "円です。";
+    });
+}
+</script>
+</body>
+</html>
