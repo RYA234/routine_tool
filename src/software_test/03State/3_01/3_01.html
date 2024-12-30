@@ -1,0 +1,81 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>3_1 ストップウォッチ</title>
+</head>
+<body>
+    <h1>3_1 ストップウォッチ</h1>
+
+    <div id="elapsed_time">経過時間:0.0</div>
+    <div>
+    <button id="start_or_stop">計算</button>
+    <button id="reset">リセット</button>
+    </div>
+    <div id="state" style="color:red;">状態:準備中</div>
+<script>
+// 状態の実装は一番簡単な方法で実装します。
+
+// event 系
+window.onload = (event) => {
+
+    const elapsedTime = document.getElementById('elapsed_time');
+    const startOrStopButton = document.getElementById('start_or_stop');
+    const resetButton = document.getElementById('reset');
+    const state = document.getElementById('state');
+    
+    let currentTime = 0;
+    let timerInterval;
+    
+    const statePrepare =0;
+    const stateRunning =1;
+    const stateStopped =2;
+    let currentState  = statePrepare;
+
+    // ボタンクリック時の処理
+    startOrStopButton.addEventListener('click', event => {
+        if (currentState === statePrepare || currentState === stateStopped) {
+            currentState = stateRunning;
+            timerInterval = setInterval(() => {
+                currentTime += 0.100 ;
+                console.log(`経過時間: ${currentTime}`);
+                elapsedTime.innerHTML = `経過時間: ${Math.round(currentTime*100)/100}`;
+            }, 100);
+        } else if (currentState === stateRunning) {
+            currentState = stateStopped;
+            clearInterval(timerInterval);
+        }
+        displayState();
+    });
+
+    resetButton.addEventListener('click', event => {
+        if(currentState === statePrepare){
+            return;
+        }
+        clearInterval(timerInterval);
+        currentState = statePrepare;
+        console.log("リセットされました。");
+        currentTime = 0;
+        elapsedTime.innerHTML = `経過時間:0.0`;
+        displayState();
+    });
+
+    function displayState(){
+        if(currentState == statePrepare){
+            state.innerHTML = "状態:準備中";
+        }
+
+        if(currentState == stateRunning){
+            state.innerHTML = "状態:計測中";
+        }
+
+        if(currentState == stateStopped){
+            state.innerHTML = "状態:一時停止";
+        }
+    }
+    
+
+}
+</script>
+</body>
+</html>
