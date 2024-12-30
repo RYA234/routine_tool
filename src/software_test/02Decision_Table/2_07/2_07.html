@@ -1,0 +1,94 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2_07 宅配ピザの宅配</title>
+</head>
+<body>
+    <h1>2_07 宅配ピザの宅配</h1>
+    <div>
+        <div>
+            <div>
+                <label for="count-select">ピザの枚数:</label>
+                <select name="count-select" id="count-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+            </div>
+            <div>
+                <label for="reserve_type">受取方法:</label>
+                        <input type="radio" id="delivery" name="reserve_type" value="delivery" checked/>
+                        <label for="delivery">宅配</label>
+                        <input type="radio" id="store" name="reserve_type" value="store" checked/>
+                        <label for="store">ストア</label>
+            </div>
+                    クーポン
+                <input type="checkbox" id="coupon" name="coupon" />
+                <label for="coupon">有</label>
+        </div>
+    </div>
+    <button id="run">判定する</button>
+    <div id="result" style="color:red;"> </div>
+<script>
+    // event 系
+window.onload = (event) => {
+    const reserveTypeRadioBox = document.getElementsByName('reserve_type');
+    const countSelectPullDown = document.getElementById('count-select');
+    const button = document.getElementById('run');
+    const result = document.getElementById('result');
+    
+    const pizzaPrice = 500;
+
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+        console.log(getReserveTypeRadioBoxValue());
+        console.log(countSelectPullDown.value)
+        console.log(document.getElementById('coupon').checked);
+        result.innerHTML = `結果 価格：${(pizzaPrice*parseInt(countSelectPullDown.value)+getStoreService())*couponDiscount()}円：フライドポテト${getFriedPotatoService()}`;
+    });
+    function getReserveTypeRadioBoxValue(){
+        // ラジオボタンの取得
+        let elements = document.getElementsByName('reserve_type');
+        let len = elements.length;
+        let checkValue = '';
+        for (let i = 0; i < len; i++){
+            if (elements.item(i).checked){
+                checkValue = elements.item(i).value;
+            }
+        }
+        return checkValue;
+}
+
+// 店頭ピザ受取
+function getStoreService(){
+    if(getReserveTypeRadioBoxValue()  == "store" && parseInt(countSelectPullDown.value) >= 2 ){
+        return -500;
+    }
+        return 0;
+}
+
+// フライドポテトサービス
+function getFriedPotatoService(){
+    if(parseInt(countSelectPullDown.value) * pizzaPrice >= 1500){
+        return "有り";
+    }
+        return "無し"
+}
+
+// クーポン割引
+function couponDiscount(){
+    if(document.getElementById('coupon').checked && getReserveTypeRadioBoxValue()  == "delivery"){
+        return 0.8;
+    }
+        return 1;
+}
+
+}
+
+
+</script>
+</body>
+</html>
