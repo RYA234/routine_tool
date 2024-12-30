@@ -1,0 +1,147 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2_06 プリペイドカードのチャージ特典</title>
+</head>
+<body>
+    <h1>2_06 プリペイドカードのチャージ特典</h1>
+    <div>
+        <h2>現在のランク</h2>
+        <div>
+            <div>
+                <div>
+                    <input type="radio" id="silver" name="rank" value="silver" checked />
+                    <label for="silver">シルバー</label>
+                </div>
+                <div>
+                    <input type="radio" id="gold" name="rank" value="gold"/>
+                    <label for="gold">ゴールド</label>
+                </div>
+                <div>
+                    <input type="radio" id="black" name="rank" value="black"/>
+                    <label for="black">ブラック</label>
+                </div>
+            </div>
+
+            <h2>チャージ額</h2>
+            <div>
+                <div>
+                    <div>
+                        <input type="radio" id="three_thousand" name="charge" value="3000" checked/>
+                        <label for="three_thousand">3000</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="five_thousand" name="charge" value="5000" />
+                        <label for="five_thousand">5000</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="ten_thousand" name="charge" value="10000" />
+                        <label for="charge">10000</label>
+                    </div>
+                </div>
+            <ul>
+                <li>
+                    当選
+                    <input type="checkbox" id="elected" name="elected" />
+                    <label for="elected">有</label>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <button id="run">チャージする</button>
+    <div id="result" style="color:red;"> </div>
+<script>
+    let currentEnchant = [0,0,0,0];
+    const maxEnchant = [0,0,0,1];
+    const  weapon_id =["hinoki","ninjin","kikori","kusanagi"];
+
+    // event 系
+window.onload = (event) => {
+    const rankRadioBox = document.getElementsByName('rank');
+    const electedCheckBox = document.getElementById('elected');
+    const button = document.getElementById('run');
+    const result = document.getElementById('result');
+    
+    const normalPrice = 490;
+    const couponPrice = 100;
+    const happyHourPrice = 290;
+
+    // ボタンクリック時の処理
+    button.addEventListener('click', event => {
+        if(getRankRadioBoxValue() == "silver"){
+            if(getChargeRadioBoxValue() == "3000")result.innerHTML = "結果:1%プラス";
+            
+            if(getChargeRadioBoxValue() == "5000"){
+                result.innerHTML = "結果:2%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:2%プラス_クーポン有り";
+                }
+
+            if(getChargeRadioBoxValue() == "10000"){
+                result.innerHTML = "結果:4%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:4%プラス_クーポン有り";
+                }
+        }
+
+        if(getRankRadioBoxValue() == "gold"){
+            if(getChargeRadioBoxValue() == "3000")result.innerHTML = "結果:3%プラス";
+            
+            if(getChargeRadioBoxValue() == "5000"){
+                result.innerHTML = "結果:5%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:5%プラス_クーポン有り";
+                }
+
+            if(getChargeRadioBoxValue() == "10000"){
+                result.innerHTML = "結果:10%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:10%プラス_クーポン有り";
+                }
+        }
+
+        if(getRankRadioBoxValue() == "black"){
+            if(getChargeRadioBoxValue() == "3000")result.innerHTML = "結果:5%プラス";
+            
+            if(getChargeRadioBoxValue() == "5000"){
+                result.innerHTML = "結果:7%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:7%プラス_クーポン有り";
+                }
+
+            if(getChargeRadioBoxValue() == "10000"){
+                result.innerHTML = "結果:15%プラス";
+                if(electedCheckBox.checked)result.innerHTML = "結果:15%プラス_クーポン有り";
+                }
+        }
+
+        }
+    );
+}
+
+function getRankRadioBoxValue(){
+        // ラジオボタンの取得
+        let elements = document.getElementsByName('rank');
+        let len = elements.length;
+        let checkValue = '';
+        for (let i = 0; i < len; i++){
+            if (elements.item(i).checked){
+                checkValue = elements.item(i).value;
+            }
+        }
+        return checkValue;
+}
+
+function getChargeRadioBoxValue(){
+        // ラジオボタンの取得
+        let elements = document.getElementsByName('charge');
+        let len = elements.length;
+        let checkValue = '';
+        for (let i = 0; i < len; i++){
+            if (elements.item(i).checked){
+                checkValue = elements.item(i).value;
+            }
+        }
+        return checkValue;
+}
+
+</script>
+</body>
+</html>
