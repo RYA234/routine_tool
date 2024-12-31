@@ -1,0 +1,129 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>3_2 スマホ決済アプリの決済処理</title>
+</head>
+<body>
+    <h1>3_2 スマホ決済アプリの決済処理</h1>
+    <div>
+        <label for="action">次の操作:</label>
+        <select name="action" id="action">
+        </select>
+    </div>
+    <div>
+        <button id="run">実行する</button>
+    </div>
+    <label for="state">現在の状態:</label>
+    <div id="state" style="color:red;" name="state"> </div>
+<script>
+// event 系
+window.onload = (event) => {
+    const actionPullDown = document.getElementById('action');
+    actionPullDown.innerHTML = "";
+    const run = document.getElementById('run');
+    const state = document.getElementById('state');
+    state.innerHTML = "操作待機";
+    setPulldown();
+    // ボタンクリック時の処理
+    run.addEventListener('click', event => {
+        // 次のアクションについて戦意を変更する
+        setNextState();
+        console.log(actionPullDown.selectedOptions[0].text);
+        actionPullDown.innerHTML = "";
+        setPulldown();
+    });
+    function setNextState(){
+        switch(state.innerHTML){
+            case "操作待機":
+                if(actionPullDown.selectedOptions[0].text == "読取"){
+                    state.innerHTML ="読取待機"
+                    break;
+                }
+                break;
+            case "読取待機":
+                if(actionPullDown.selectedOptions[0].text == "バーコード読取"){
+                    state.innerHTML ="金額確認"
+                    break;
+                }
+                if(actionPullDown.selectedOptions[0].text == "キャンセル"){
+                    state.innerHTML ="操作待機"
+                    break;
+                }
+                break;
+            case "金額確認":
+                if(actionPullDown.selectedOptions[0].text == "決済する"){
+                    state.innerHTML ="結果待ち"
+                    break;
+                }
+                if(actionPullDown.selectedOptions[0].text == "キャンセル"){
+                    state.innerHTML ="操作待機"
+                    break;
+                }
+                break;
+            case "結果待ち":
+                if(actionPullDown.selectedOptions[0].text == "成功"){
+                    state.innerHTML ="結果_成功"
+                    break;
+                }
+                if(actionPullDown.selectedOptions[0].text == "失敗"){
+                    state.innerHTML ="結果_失敗"
+                    break;
+                }
+                break;
+            case "結果_成功":
+                if(actionPullDown.selectedOptions[0].text == "OK"){
+                    state.innerHTML ="操作待機"
+                    break;
+                }
+                break;
+            case "結果_失敗":
+                if(actionPullDown.selectedOptions[0].text == "OK"){
+                    state.innerHTML ="操作待機"
+                    break;
+                }
+                if(actionPullDown.selectedOptions[0].text == "再読取"){
+                    state.innerHTML ="読取待機"
+                    break;
+                }
+                break;
+        }
+    }
+    // 次のactionを設定する
+    function setPulldown(){
+        switch(state.innerHTML){
+            case "操作待機":
+                addPullDown("読取","scan_prepare");
+                break;
+            case "読取待機":
+                addPullDown("バーコード読取","scan_execute");
+                addPullDown("キャンセル","cancel");
+                break;
+            case "金額確認":
+                addPullDown("決済する","settlement");
+                addPullDown("キャンセル","cancel");
+                break;
+            case "結果待ち":
+                addPullDown("成功","success");
+                addPullDown("失敗","fail");
+                break;
+            case "結果_成功":
+                addPullDown("OK","OK");
+                break;
+            case "結果_失敗":
+                addPullDown("OK","OK");
+                addPullDown("再読取","re_scan_prepare");
+                break;
+        }
+    }
+    // プルダウンを追加する
+    function addPullDown(pullDownText,pullDownValue){
+        var option = document.createElement('option');
+        option.text=pullDownText
+        option.value=pullDownValue
+        actionPullDown.appendChild(option);
+    }
+}
+</script>
+</body>
+</html>
