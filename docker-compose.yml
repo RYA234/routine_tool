@@ -1,7 +1,9 @@
 version: '3'
 services:
   webserver:
-    build: node
+    build: 
+      context: .
+      dockerfile: Dockerfile
     image: node-express-dev:1.0
     tty: true
     volumes:
